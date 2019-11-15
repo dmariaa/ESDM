@@ -24,6 +24,7 @@ namespace ESDM.MenuSystem
         // Start is called before the first frame update
         void Start()
         {
+            CreateMenuButton();
             CreateMenu();
             SelectChild(currentSelectedChild);
         }
@@ -31,14 +32,17 @@ namespace ESDM.MenuSystem
         void CreateMenuButton()
         {
             selectedMenuGameObject = new GameObject("MenuButton");
-            selectedMenuGameObject.transform.parent = transform;
-
+            selectedMenuGameObject.transform.localScale = Vector3.one;
+            selectedMenuGameObject.transform.localPosition = new Vector3(-25.0f, 0.0f, 0.0f);
+            
             RectTransform rectTransform = selectedMenuGameObject.AddComponent<RectTransform>();
             rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(0.0f, 0.5f);
+            rectTransform.sizeDelta = new Vector2(20.0f, 20.0f);
+            rectTransform.localScale = Vector3.one;
+            rectTransform.localPosition = new Vector3(-25.0f, 0.0f, 0.0f);
 
             Image image = selectedMenuGameObject.AddComponent<Image>();
             image.sprite = SelectedMenuSprite;
-
         }
 
         // Update is called once per frame
@@ -85,7 +89,13 @@ namespace ESDM.MenuSystem
             GameObject selected = transform.GetChild(child).gameObject;
             Text selectedText = selected.GetComponent<Text>();
             selectedText.fontStyle = FontStyle.Bold;
-            selectedMenuGameObject.GetComponent<RectTransform>().localPosition = selected.GetComponent<RectTransform>().localPosition;
+            
+            RectTransform rectTransform = selectedMenuGameObject.GetComponent<RectTransform>();
+            rectTransform.parent = selected.transform;
+            rectTransform.localPosition = new Vector3(-25.0f, 15.0f, 0.0f);
+            rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(0.0f, 0.5f);
+            rectTransform.sizeDelta = new Vector2(20.0f, 20.0f);
+            rectTransform.localScale = Vector3.one;
         }
 
         void UnSelectChild(int child)

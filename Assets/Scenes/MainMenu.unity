@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -684,7 +684,7 @@ MonoBehaviour:
   FontSize: 30
   MenuFontMaterial: {fileID: 0}
   MenuTextColor: {r: 1, g: 1, b: 1, a: 1}
-  SelectedMenuSprite: {fileID: 0}
+  SelectedMenuSprite: {fileID: 21300000, guid: 9b9d4a1418aca3c4b84322c06e448aa9, type: 3}
   options:
   - name: graphics
     label: "Gr\xE1ficos"
@@ -983,7 +983,7 @@ MonoBehaviour:
   FontSize: 30
   MenuFontMaterial: {fileID: 0}
   MenuTextColor: {r: 1, g: 1, b: 1, a: 1}
-  SelectedMenuSprite: {fileID: 0}
+  SelectedMenuSprite: {fileID: 21300000, guid: 9b9d4a1418aca3c4b84322c06e448aa9, type: 3}
   options:
   - name: continue
     label: Continuar
