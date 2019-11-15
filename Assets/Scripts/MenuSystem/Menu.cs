@@ -17,15 +17,67 @@ namespace ESDM.MenuSystem
         public Color MenuTextColor = Color.white;
         public List<MenuOption> options;
 
+        private int currentSelectedChild = 0;
+
         // Start is called before the first frame update
         void Start()
         {
             CreateMenu();
+            SelectChild(currentSelectedChild);
         }
 
         // Update is called once per frame
         void Update()
         {        
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                UnSelectChild(currentSelectedChild);
+
+                do
+                {
+                    currentSelectedChild = (currentSelectedChild == transform.childCount - 1) ? 0 : currentSelectedChild + 1;
+                } while (options[currentSelectedChild].isSpacer);
+                
+                SelectChild(currentSelectedChild);
+            } else if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                UnSelectChild(currentSelectedChild);
+                do
+                { 
+                    currentSelectedChild = (currentSelectedChild == 0) ? transform.childCount - 1 : currentSelectedChild - 1;
+                } while (options[currentSelectedChild].isSpacer);
+                SelectChild(currentSelectedChild);
+            }
+            else if(Input.GetKeyDown(KeyCode.Space))
+            {
+                RunAction(currentSelectedChild);
+            }
+        }
+
+        void RunAction(int selectedMenu)
+        {
+            MenuOption menuOption = options[selectedMenu];
+            if(menuOption.destination != null)
+            {
+                menuOption.destination.transform.gameObject.SetActive(true);
+                transform.parent.gameObject.SetActive(false);
+            }
+        }
+
+        void SelectChild(int child)
+        {
+            child = transform.childCount - child - 1;
+            GameObject selected = transform.GetChild(child).gameObject;
+            Text selectedText = selected.GetComponent<Text>();
+            selectedText.fontStyle = FontStyle.Bold;
+        }
+
+        void UnSelectChild(int child)
+        {
+            child = transform.childCount - child - 1;
+            GameObject selected = transform.GetChild(child).gameObject;
+            Text selectedText = selected.GetComponent<Text>();
+            selectedText.fontStyle = FontStyle.Normal;
         }
 
         void CreateMenu()
@@ -50,6 +102,7 @@ namespace ESDM.MenuSystem
             trans.pivot = Vector2.zero;
             trans.localPosition = position;
             trans.localScale = Vector3.one;
+            trans.sizeDelta = new Vector2(0f, 30.0f);
 
             Text text = optionGameObject.AddComponent<Text>();
             text.text = label;
@@ -57,6 +110,7 @@ namespace ESDM.MenuSystem
             text.material = this.MenuFontMaterial;        
             text.color = MenuTextColor;
             text.fontSize = FontSize;
+            text.alignment = TextAnchor.MiddleLeft;
             text.verticalOverflow = VerticalWrapMode.Overflow;
             text.horizontalOverflow = HorizontalWrapMode.Overflow;
         }
