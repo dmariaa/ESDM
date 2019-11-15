@@ -15,8 +15,10 @@ namespace ESDM.MenuSystem
         public int FontSize = 30;
         public Material MenuFontMaterial;
         public Color MenuTextColor = Color.white;
+        public Sprite SelectedMenuSprite;
         public List<MenuOption> options;
 
+        private GameObject selectedMenuGameObject;
         private int currentSelectedChild = 0;
 
         // Start is called before the first frame update
@@ -24,6 +26,19 @@ namespace ESDM.MenuSystem
         {
             CreateMenu();
             SelectChild(currentSelectedChild);
+        }
+
+        void CreateMenuButton()
+        {
+            selectedMenuGameObject = new GameObject("MenuButton");
+            selectedMenuGameObject.transform.parent = transform;
+
+            RectTransform rectTransform = selectedMenuGameObject.AddComponent<RectTransform>();
+            rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(0.0f, 0.5f);
+
+            Image image = selectedMenuGameObject.AddComponent<Image>();
+            image.sprite = SelectedMenuSprite;
+
         }
 
         // Update is called once per frame
@@ -70,6 +85,7 @@ namespace ESDM.MenuSystem
             GameObject selected = transform.GetChild(child).gameObject;
             Text selectedText = selected.GetComponent<Text>();
             selectedText.fontStyle = FontStyle.Bold;
+            selectedMenuGameObject.GetComponent<RectTransform>().localPosition = selected.GetComponent<RectTransform>().localPosition;
         }
 
         void UnSelectChild(int child)
@@ -83,6 +99,8 @@ namespace ESDM.MenuSystem
         void CreateMenu()
         {
             Vector3 position = InitialPosition;
+
+            position.x += 50.0f;
         
             for (int i = options.Count - 1; i >= 0; i--)
             {
