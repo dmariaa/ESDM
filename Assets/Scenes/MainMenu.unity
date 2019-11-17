@@ -691,26 +691,31 @@ MonoBehaviour:
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: sound
     label: Sonido
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: controllers
     label: Controles
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: language
     label: Idioma
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: back
     label: Regresar
     Type: 0
     isSpacer: 0
     destination: {fileID: 17451458}
+    GameObject: {fileID: 0}
 --- !u!114 &612146158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -990,26 +995,31 @@ MonoBehaviour:
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: new-game
     label: Nueva partida
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: load-game
     label: Cargar partida
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: espacer
     label: 
     Type: 0
     isSpacer: 1
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: back
     label: Regresar
     Type: 0
     isSpacer: 0
     destination: {fileID: 17451458}
+    GameObject: {fileID: 0}
 --- !u!114 &1203423231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,6 +1069,7 @@ GameObject:
   - component: {fileID: 1331996245}
   - component: {fileID: 1331996244}
   - component: {fileID: 1331996243}
+  - component: {fileID: 1331996246}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1109,26 +1120,31 @@ MonoBehaviour:
     Type: 0
     isSpacer: 0
     destination: {fileID: 1071520880}
+    GameObject: {fileID: 0}
   - name: stats
     label: "Estad\xEDsticas"
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: settings
     label: Configurar
     Type: 0
     isSpacer: 0
     destination: {fileID: 1593769840}
+    GameObject: {fileID: 0}
   - name: credits
     label: "Cr\xE9ditos"
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
   - name: exit
     label: Salir
     Type: 0
     isSpacer: 0
     destination: {fileID: 0}
+    GameObject: {fileID: 0}
 --- !u!114 &1331996244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,6 +1182,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331996241}
   m_CullTransparentMesh: 0
+--- !u!114 &1331996246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331996241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14b49197f474037909f4b73f2aefc83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1593769837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

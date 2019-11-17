@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 namespace ESDM.MenuSystem
 {
-    public class Menu : MonoBehaviour
+    public class Menu : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     {
         public Vector2 InitialPosition = new Vector2(10.0f, 10.0f);
         public Font MenuFont;
@@ -19,14 +21,17 @@ namespace ESDM.MenuSystem
         public List<MenuOption> options;
 
         private GameObject selectedMenuGameObject;
-        private int currentSelectedChild = 0;
+        private string currentSelectedChild;
+
+        private Dictionary<string, MenuOption> menuOptions;
 
         // Start is called before the first frame update
         void Start()
         {
+            menuOptions = new Dictionary<string, MenuOption>();
             CreateMenuButton();
             CreateMenu();
-            SelectChild(currentSelectedChild);
+            SelectChild(options[0].name);
         }
 
         void CreateMenuButton()
@@ -44,83 +49,27 @@ namespace ESDM.MenuSystem
             Image image = selectedMenuGameObject.AddComponent<Image>();
             image.sprite = SelectedMenuSprite;
         }
-
-        // Update is called once per frame
-        void Update()
-        {        
-            if(Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                UnSelectChild(currentSelectedChild);
-
-                do
-                {
-                    currentSelectedChild = (currentSelectedChild == transform.childCount - 1) ? 0 : currentSelectedChild + 1;
-                } while (options[currentSelectedChild].isSpacer);
-                
-                SelectChild(currentSelectedChild);
-            } else if(Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                UnSelectChild(currentSelectedChild);
-                do
-                { 
-                    currentSelectedChild = (currentSelectedChild == 0) ? transform.childCount - 1 : currentSelectedChild - 1;
-                } while (options[currentSelectedChild].isSpacer);
-                SelectChild(currentSelectedChild);
-            }
-            else if(Input.GetKeyDown(KeyCode.Space))
-            {
-                RunAction(currentSelectedChild);
-            }
-        }
-
-        void RunAction(int selectedMenu)
-        {
-            MenuOption menuOption = options[selectedMenu];
-            if(menuOption.destination != null)
-            {
-                menuOption.destination.transform.gameObject.SetActive(true);
-                transform.parent.gameObject.SetActive(false);
-            }
-        }
-
-        void SelectChild(int child)
-        {
-            child = transform.childCount - child - 1;
-            GameObject selected = transform.GetChild(child).gameObject;
-            Text selectedText = selected.GetComponent<Text>();
-            selectedText.fontStyle = FontStyle.Bold;
-            
-            RectTransform rectTransform = selectedMenuGameObject.GetComponent<RectTransform>();
-            rectTransform.parent = selected.transform;
-            rectTransform.localPosition = new Vector3(-25.0f, 15.0f, 0.0f);
-            rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(0.0f, 0.5f);
-            rectTransform.sizeDelta = new Vector2(20.0f, 20.0f);
-            rectTransform.localScale = Vector3.one;
-        }
-
-        void UnSelectChild(int child)
-        {
-            child = transform.childCount - child - 1;
-            GameObject selected = transform.GetChild(child).gameObject;
-            Text selectedText = selected.GetComponent<Text>();
-            selectedText.fontStyle = FontStyle.Normal;
-        }
-
+        
         void CreateMenu()
         {
+            menuOptions.Clear();
+            
             Vector3 position = InitialPosition;
-
             position.x += 50.0f;
         
             for (int i = options.Count - 1; i >= 0; i--)
             {
                 MenuOption option = options[i];
-                CreateMenuOption(option.name, option.label, position);
+                if (!option.isSpacer)
+                {
+                    option.GameObject = CreateMenuOption(option.name, option.label, position);
+                    menuOptions.Add(option.name, option);
+                }
                 position.y += 50.0f;
             }
         }
 
-        void CreateMenuOption(string name, string label, Vector3 position)
+        GameObject CreateMenuOption(string name, string label, Vector3 position)
         {
             GameObject optionGameObject = new GameObject(name);
             optionGameObject.transform.SetParent(transform);
@@ -130,7 +79,6 @@ namespace ESDM.MenuSystem
             trans.pivot = Vector2.zero;
             trans.localPosition = position;
             trans.localScale = Vector3.one;
-            trans.sizeDelta = new Vector2(0f, 30.0f);
 
             Text text = optionGameObject.AddComponent<Text>();
             text.text = label;
@@ -141,6 +89,119 @@ namespace ESDM.MenuSystem
             text.alignment = TextAnchor.MiddleLeft;
             text.verticalOverflow = VerticalWrapMode.Overflow;
             text.horizontalOverflow = HorizontalWrapMode.Overflow;
+
+            trans.sizeDelta = new Vector2(text.preferredWidth, 30.0f);
+
+            return optionGameObject;
+        }
+        
+        void SelectChild(string child)
+        {
+            MenuOption menuOption = menuOptions[child];
+            
+            if(menuOption != null){
+                Text selectedText = menuOption.GameObject.GetComponent<Text>();
+                selectedText.fontStyle = FontStyle.Bold;
+
+                RectTransform rectTransform = selectedMenuGameObject.GetComponent<RectTransform>();
+                rectTransform.SetParent(menuOption.GameObject.transform, false);
+                rectTransform.localPosition = new Vector3(-25.0f, 15.0f, 0.0f);
+                rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(0.0f, 0.5f);
+                rectTransform.sizeDelta = new Vector2(20.0f, 20.0f);
+                rectTransform.localScale = Vector3.one;
+
+                currentSelectedChild = menuOption.name;
+            }
+        }
+
+        void UnSelectChild(string child)
+        {
+            MenuOption menuOption = menuOptions[child];
+            
+            if (menuOption != null)
+            {
+                Text selectedText = menuOption.GameObject.GetComponent<Text>();
+                selectedText.fontStyle = FontStyle.Normal;
+            }
+        }
+        
+        private MenuOption GetPreviousOption(string option)
+        {
+            for (int i = 0, length = menuOptions.Count; i < length; i++)
+            {
+                if (menuOptions.ElementAt(i).Value.name == option)
+                {
+                    if (i == length - 1)
+                    {
+                        return menuOptions.ElementAt(0).Value;
+                    }
+
+                    return menuOptions.ElementAt(i + 1).Value;
+                }
+            }
+
+            return null;
+        }
+
+        private MenuOption GetNextOption(string option)
+        {
+            for (int i = menuOptions.Count - 1; i >= 0; i--)
+            {
+                if (menuOptions.ElementAt(i).Value.name == option)
+                {
+                    if (i == 0)
+                    {
+                        return menuOptions.ElementAt(menuOptions.Count - 1).Value;
+                    }
+
+                    return menuOptions.ElementAt(i - 1).Value;
+                }                
+            }
+
+            return null;
+        }
+
+        void RunAction(string optionName)
+        {
+            MenuOption menuOption = menuOptions[optionName];
+            
+            if(menuOption.destination != null)
+            {
+                menuOption.destination.transform.gameObject.SetActive(true);
+                transform.parent.gameObject.SetActive(false);
+            }
+            
+            ExecuteEvents.Execute<IMenuEventHandler>(transform.gameObject, null,
+                (handler, eventData) => { handler.MenuSelected(menuOption.name); } );
+        }
+        
+        // Update is called once per frame
+        void Update()
+        {        
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                UnSelectChild(currentSelectedChild);
+                SelectChild(GetNextOption(currentSelectedChild).name);
+            } else if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                UnSelectChild(currentSelectedChild);
+                SelectChild(GetPreviousOption(currentSelectedChild).name);
+            }
+            else if(Input.GetKeyDown(KeyCode.Space))
+            {
+                RunAction(currentSelectedChild);
+            }
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            RunAction(eventData.pointerEnter.name);            
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            UnSelectChild(currentSelectedChild);
+            SelectChild(menuOptions[eventData.pointerEnter.name].name);
         }
     }
 }

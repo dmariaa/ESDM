@@ -18,5 +18,8 @@ namespace ESDM.MenuSystem
         public MenuOptionType Type;
         public bool isSpacer = false;
         public Canvas destination;
+
+        [HideInInspector]
+        public GameObject GameObject;
     };
 }
