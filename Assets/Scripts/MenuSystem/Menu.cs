@@ -15,6 +15,7 @@ namespace ESDM.MenuSystem
         public Vector2 InitialPosition = new Vector2(10.0f, 10.0f);
         public Font MenuFont;
         public int FontSize = 30;
+        public int ElementHeight = 50; 
         public Material MenuFontMaterial;
         public Color MenuTextColor = Color.white;
         public Sprite SelectedMenuSprite;
@@ -29,6 +30,15 @@ namespace ESDM.MenuSystem
         void Start()
         {
             menuOptions = new Dictionary<string, MenuOption>();
+            Restart();
+        }
+
+        public void Restart()
+        {
+            foreach (Transform child in transform) {
+                GameObject.Destroy(child.gameObject);
+            }
+            
             CreateMenuButton();
             CreateMenu();
             SelectChild(menuOptions.ElementAt(menuOptions.Count - 1).Value.name);
@@ -65,7 +75,7 @@ namespace ESDM.MenuSystem
                     option.GameObject = CreateMenuOption(option.name, option.label, position);
                     menuOptions.Add(option.name, option);
                 }
-                position.y += 50.0f;
+                position.y += (float)ElementHeight;
             }
         }
 
