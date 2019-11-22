@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using ESDM.MenuSystem;
 using UnityEngine;
@@ -10,11 +9,16 @@ namespace Questions
     public class QuestionsManager : MonoBehaviour, ITimeSliderEventHandler
     {
         public List<Question> questions = new List<Question>();
-
         private int currentQuestion = 0;
+        public GameObject endLevelPanel;
 
         private void Start()
         {
+        }
+
+        private void OnEnable()
+        {
+            Debug.Log("Starting test");
             StartTest();
         }
 
@@ -52,6 +56,11 @@ namespace Questions
             if (currentQuestion < questions.Count)
             {
                 GenerateQuestion(currentQuestion);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+                endLevelPanel.SetActive(true);
             }
         }
     }

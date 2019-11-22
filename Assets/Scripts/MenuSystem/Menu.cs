@@ -62,7 +62,14 @@ namespace ESDM.MenuSystem
         
         void CreateMenu()
         {
-            menuOptions.Clear();
+            if(menuOptions != null)
+            {
+                menuOptions.Clear();
+            }
+            else
+            {
+                menuOptions = new Dictionary<string, MenuOption>();
+            }
             
             Vector3 position = InitialPosition;
             position.x += 50.0f;
