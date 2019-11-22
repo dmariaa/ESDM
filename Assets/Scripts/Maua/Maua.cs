@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Maua
@@ -9,17 +10,28 @@ namespace Maua
         public bool interactive = true;
         private string currentName = "";
         private string selectedPetal = "";
+        private string sprite = "";
+        public GameObject eventHandler;
 
         private void Start()
         {
+            if(eventHandler==null)
+            {
+                eventHandler = ExecuteEvents.GetEventHandler<IMauaEventHandler>(transform.gameObject);
+            }
+            if (eventHandler == null)
+            {
+                Debug.LogError("No event handler for maua events found.");
+            }
+            
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject child = transform.GetChild(i).gameObject;
                 Image childImage = child.GetComponent<Image>();
-                
+
                 if (childImage != null && childImage.sprite != null)
                 {
-                    child.GetComponent<Image>().alphaHitTestMinimumThreshold = 1;    
+                    child.GetComponent<Image>().alphaHitTestMinimumThreshold = 1;
                 }
             }
         }
@@ -50,19 +62,28 @@ namespace Maua
 
         public void PetalSelect(string name)
         {
-            Debug.LogFormat("Selected petal: {0}", name);
-            
+            GameObject petal;
+
             if (name != selectedPetal)
             {
                 string current = selectedPetal;
                 selectedPetal = name;
-                
+
                 if (current != "")
                 {
                     PetalExit(current);
+                    
+                    petal = transform.Find(current).gameObject;
+                    
+                    ExecuteEvents.Execute<IMauaEventHandler>(eventHandler, null,
+                        (handler, data) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), false); });
                 }
             }
+            
+            petal = transform.Find(name).gameObject;
+            ExecuteEvents.Execute<IMauaEventHandler>(eventHandler, null,
+                (handler, data) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), true); });
+
         }
     }
-
 }

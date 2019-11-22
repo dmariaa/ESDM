@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Maua
 {
@@ -74,6 +75,16 @@ namespace Maua
         {
             _direction = -1.0f;
             _moving = true;
+        }
+
+        public void SetPetalImage(Sprite image)
+        {
+            Transform item = transform.Find("Item");
+            Image itemImage = item.GetComponent<Image>();
+            itemImage.sprite = image;
+            Color color = Color.white;
+            color.a = image == null ? 0.0f : 1.0f;
+            itemImage.color = color;
         }
     }
 }
