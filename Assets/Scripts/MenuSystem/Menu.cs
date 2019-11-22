@@ -31,7 +31,7 @@ namespace ESDM.MenuSystem
             menuOptions = new Dictionary<string, MenuOption>();
             CreateMenuButton();
             CreateMenu();
-            SelectChild(options[0].name);
+            SelectChild(menuOptions.ElementAt(menuOptions.Count - 1).Value.name);
         }
 
         void CreateMenuButton()

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Maua
 {
-    public class MauaPetal : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class MauaPetal : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
         public Vector3 DirectionVector;
         public float Speed;
@@ -57,7 +57,13 @@ namespace Maua
             ExecuteEvents.Execute<IPetalPointerEventHandler>(transform.parent.gameObject, null,
                 (handler, data) => { handler.PetalExit(this.name); } );
         }
-
+        
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            ExecuteEvents.Execute<IPetalPointerEventHandler>(transform.parent.gameObject, null,
+                (handler, data) => { handler.PetalSelect(this.name); } );
+        }
+        
         public void Show()
         {
             _direction = 1.0f;

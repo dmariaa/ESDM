@@ -6,5 +6,6 @@ namespace Maua
     {
         void PetalEnter(string name);
         void PetalExit(string name);
+        void PetalSelect(string name);
     }
 }

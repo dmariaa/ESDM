@@ -8,14 +8,16 @@ namespace Maua
     {
         public bool interactive = true;
         private string currentName = "";
-        
+        private string selectedPetal = "";
+
         private void Start()
         {
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject child = transform.GetChild(i).gameObject;
                 Image childImage = child.GetComponent<Image>();
-                if (childImage.sprite != null)
+                
+                if (childImage != null && childImage.sprite != null)
                 {
                     child.GetComponent<Image>().alphaHitTestMinimumThreshold = 1;    
                 }
@@ -26,7 +28,7 @@ namespace Maua
         {
             if (!interactive) return;
             
-            if(name != currentName)
+            if(name != currentName && name != selectedPetal)
             {
                 GameObject petal = transform.Find(name).gameObject;
                 petal.GetComponent<MauaPetal>().Show();
@@ -38,9 +40,28 @@ namespace Maua
         {
             if (!interactive) return;
             
-            GameObject petal = transform.Find(name).gameObject;
-            petal.GetComponent<MauaPetal>().Hide();
-            currentName = "";
+            if(name != selectedPetal)
+            {
+                GameObject petal = transform.Find(name).gameObject;
+                petal.GetComponent<MauaPetal>().Hide();
+                currentName = "";
+            }
+        }
+
+        public void PetalSelect(string name)
+        {
+            Debug.LogFormat("Selected petal: {0}", name);
+            
+            if (name != selectedPetal)
+            {
+                string current = selectedPetal;
+                selectedPetal = name;
+                
+                if (current != "")
+                {
+                    PetalExit(current);
+                }
+            }
         }
     }
 
