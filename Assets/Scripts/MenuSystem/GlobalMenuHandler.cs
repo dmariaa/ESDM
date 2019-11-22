@@ -1,9 +1,16 @@
+using System;
 using UnityEngine;
 
 namespace ESDM.MenuSystem
 {
     public class GlobalMenuHandler : MonoBehaviour, IMenuEventHandler
     {
+        private void Start()
+        {
+            GameObject soundHandler = GameObject.Find("GlobalSoundController");
+            soundHandler.GetComponent<GlobalSoundController>().PlayMusic();
+        }
+
         public void MenuSelected(string option)
         {
             switch (option)
