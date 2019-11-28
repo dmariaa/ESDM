@@ -21,7 +21,7 @@ namespace Maua
             }
             if (eventHandler == null)
             {
-                Debug.LogError("No event handler for maua events found.");
+                Debug.Log("No event handler for maua events found.");
             }
             
             for (int i = 0; i < transform.childCount; i++)

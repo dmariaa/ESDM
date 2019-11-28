@@ -21,6 +21,5 @@ public class PlayGameButtonHandler : MonoBehaviour
             gameObject.SetActive(false);
             destination.gameObject.SetActive(true);
         }
-        
     }
 }

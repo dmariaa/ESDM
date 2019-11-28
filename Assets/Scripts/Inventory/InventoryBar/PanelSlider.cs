@@ -25,24 +25,24 @@ namespace Inventory.InventoryBar
             }
         }
 
+        public void TogglePanel()
+        {
+            if (_direction == -1 || _rectTransform.sizeDelta.x == 0)
+            {
+                _speed = _childSize.x / SecondsToOpen;
+                _direction = 1;
+            } else if (_direction == 1 || _rectTransform.sizeDelta.x == _childSize.x)
+            {
+                _direction = -1;
+                _speed = _childSize.x / SecondsToOpen;
+            }
+        }
+
         // Update is called once per frame
         void Update()
         {
             if (_child == null) return;
-        
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                if (_direction == -1 || _rectTransform.sizeDelta.x == 0)
-                {
-                    _speed = _childSize.x / SecondsToOpen;
-                    _direction = 1;
-                } else if (_direction == 1 || _rectTransform.sizeDelta.x == _childSize.x)
-                {
-                    _direction = -1;
-                    _speed = _childSize.x / SecondsToOpen;
-                }
-            }
-        
+            
             if (_direction != 0)
             {
                 _rectTransform.sizeDelta =  new Vector2(
