@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ESDM.ScriptableObjects;
 using Inventory.InventoryBar;
 using Iventory.InventoryBar;
 using Maua;
@@ -13,10 +14,11 @@ namespace Inventory
         public List<InventoryItemTypes> InventoryItems = new List<InventoryItemTypes>();
         public GameObject InformationPanel;
         private GameObject itemSelected;
+        private GameObject buttonPrefab;
 
         private void Start()
         {
-            GameObject buttonPrefab = Resources.Load<GameObject>("Prefabs/InventoryButton");
+            buttonPrefab = Resources.Load<GameObject>("Prefabs/InventoryButton");
             
             foreach (InventoryItemTypes type in InventoryItems)
             {
@@ -27,6 +29,14 @@ namespace Inventory
             }
             
             InformationPanel.SetActive(false);
+        }
+
+        public void ItemAdd(InventoryItemTypes itemType)
+        {
+            GameObject button = Instantiate(buttonPrefab, transform);
+            InventoryItem buttonItem = button.AddComponent<InventoryItem>();
+            buttonItem.ItemType = itemType;
+            button.GetComponent<Toggle>().group = GetComponent<ToggleGroup>();
         }
 
         public void ItemSelected(GameObject item, bool selected)

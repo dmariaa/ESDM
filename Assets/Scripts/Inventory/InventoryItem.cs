@@ -47,7 +47,8 @@ namespace Inventory
         POISON_03,
         POISON_05,
         BOOK_05,
-        BOOK_07
+        BOOK_07,
+        KEY_01
     }
 
 
@@ -82,6 +83,8 @@ namespace Inventory
                     return new InventoryItemType("El secreto de Mirazcar", "El libro misterioso", "W_Book05");
                 case InventoryItemTypes.BOOK_07:
                     return new InventoryItemType("Mapa de carreteras", "Un mapa de carreteras", "W_Book07");
+                case InventoryItemTypes.KEY_01:
+                    return new InventoryItemType("Llave", "Una llave para una puert", "I_Key01");
                 default: 
                     return new InventoryItemType("", "", "");
             }

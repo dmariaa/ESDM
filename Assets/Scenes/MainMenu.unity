@@ -3713,6 +3713,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1561931002}
     m_Modifications:
+    - target: {fileID: 6985258579441453702, guid: 94a697859567c469e9a1c3ae9146cfe5,
+        type: 3}
+      propertyPath: m_Name
+      value: Maua
+      objectReference: {fileID: 0}
     - target: {fileID: 4304766710949920723, guid: 94a697859567c469e9a1c3ae9146cfe5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3833,14 +3838,33 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6985258579441453702, guid: 94a697859567c469e9a1c3ae9146cfe5,
-        type: 3}
-      propertyPath: m_Name
-      value: Maua
-      objectReference: {fileID: 0}
     - target: {fileID: 4455221600791878964, guid: 94a697859567c469e9a1c3ae9146cfe5,
         type: 3}
       propertyPath: interactive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733966568, guid: 94a697859567c469e9a1c3ae9146cfe5, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199980950, guid: 94a697859567c469e9a1c3ae9146cfe5, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 673611631, guid: 94a697859567c469e9a1c3ae9146cfe5, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 410955291, guid: 94a697859567c469e9a1c3ae9146cfe5, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570632129, guid: 94a697859567c469e9a1c3ae9146cfe5, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 713874420, guid: 94a697859567c469e9a1c3ae9146cfe5, type: 3}
+      propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5569,6 +5593,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 674924733}
     m_Modifications:
+    - target: {fileID: 6985258579441453702, guid: 94a697859567c469e9a1c3ae9146cfe5,
+        type: 3}
+      propertyPath: m_Name
+      value: Maua
+      objectReference: {fileID: 0}
+    - target: {fileID: 6985258579441453702, guid: 94a697859567c469e9a1c3ae9146cfe5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4304766710949920723, guid: 94a697859567c469e9a1c3ae9146cfe5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5689,15 +5723,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6985258579441453702, guid: 94a697859567c469e9a1c3ae9146cfe5,
+    - target: {fileID: 4455221600791878964, guid: 94a697859567c469e9a1c3ae9146cfe5,
         type: 3}
-      propertyPath: m_Name
-      value: Maua
-      objectReference: {fileID: 0}
-    - target: {fileID: 6985258579441453702, guid: 94a697859567c469e9a1c3ae9146cfe5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: interactive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94a697859567c469e9a1c3ae9146cfe5, type: 3}

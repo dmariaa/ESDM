@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using ESDM.MenuSystem;
+using ESDM.ScriptableObjects;
+using ESDM.TutorialSystem;
 using Inventory.InventoryBar;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,14 +12,10 @@ public class GlobalGameController : MonoBehaviour, IMenuEventHandler
     public GameObject InventoryPanel;
     public GameObject InventoryMaua;
     public GameObject PausePanel;
+    public GameObject TutorialRoomPanel;
     
     private bool gameIsPaused = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
