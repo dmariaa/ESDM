@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using ESDM.Items;
-using Inventory;
+﻿using InventorySystem;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour, IItemPickupHandler
+public class PlayerMovement : MonoBehaviour, IItemEventHandler
 {
     public bool paused = false;
     [SerializeField] private float moveSpeed = 2.0f;
@@ -35,10 +30,7 @@ public class PlayerMovement : MonoBehaviour, IItemPickupHandler
         else
         {
             inputX = 0.0f;
-            inputY = 0.0f;
-        }
-        
-
+            inputY = 0.0f; }
     }
 
     private void FixedUpdate()
@@ -54,19 +46,19 @@ public class PlayerMovement : MonoBehaviour, IItemPickupHandler
         animator.SetBool("Walking", (inputX != 0 || inputY != 0));
     }
 
-    public void ItemPickup(GameObject item, InventoryItemTypes itemType)
+    public void ItemPickup(ItemGameObject item)
     {
-        GameObject.Destroy(item);
-        Inventory.Inventory inventory = GameObject.FindObjectOfType<Inventory.Inventory>();
-        inventory.ItemAdd(itemType);
-        Debug.Log("ITEM PICKED UP");
+        if (InventorySystem.Inventory.Instance.InsertItem(item.Item) != -1)
+        {
+            GameObject.Destroy(item.gameObject);    
+        }
     }
 
-    public void ItemEnter(GameObject item, InventoryItemTypes inventoryItemType)
+    public void ItemEnter(ItemGameObject item)
     {
     }
 
-    public void ItemExit(GameObject item, InventoryItemTypes inventoryItemType)
+    public void ItemExit(ItemGameObject item)
     {
     }
 }

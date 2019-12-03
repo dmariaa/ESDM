@@ -42,8 +42,13 @@ namespace ESDM.TutorialSystem
 
         protected void PanelSetActive(string name, bool visible)
         {
-            Debug.LogFormat("{0} panel {1}", visible ? "Activating" : "Deactivating" ,name);
+            // Debug.LogFormat("{0} panel {1}", visible ? "Activating" : "Deactivating" ,name);
             GetPanel(name)?.SetActive(visible);
+        }
+
+        protected void PauseCharacter(bool pause = true)
+        {
+            controller.Character.GetComponent<PlayerMovement>().paused = pause;
         }
     }
 }

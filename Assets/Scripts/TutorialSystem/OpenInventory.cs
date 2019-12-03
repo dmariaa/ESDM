@@ -1,3 +1,4 @@
+using InventorySystem;
 using UnityEngine;
 
 namespace ESDM.TutorialSystem
@@ -5,20 +6,28 @@ namespace ESDM.TutorialSystem
     [CreateAssetMenu(menuName = "ESDM/TutorialSystem/Actions/OpenInventory")]
     public class OpenInventory : TutorialAction
     {
-        private float triggerTime = 1.0f;
+        private bool _triggered = false;
+        
         public override void InitAction(TutorialController controller)
         {
             base.InitAction(controller);
             ShowPanel("OpenInventory");
-            controller.Character.GetComponent<PlayerMovement>().paused = true;
+            PauseCharacter(true);
         }
 
         public override bool PlayAction()
         {
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (!_triggered)
             {
-                controller.Character.GetComponent<PlayerMovement>().paused = false;
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    _triggered = true;
+                }
+            }
+                
+            if(_triggered && controller.InventoryPanel.GetComponent<InventoryPanel>().IsOpened()) {
                 HidePanel("OpenInventory");
+                PauseCharacter(false);
                 return true;
             }
 

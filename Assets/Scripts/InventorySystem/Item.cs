@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ESDM.InventorySystem.Items
+namespace InventorySystem
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "ESDM/Items/Item", fileName = "Item.asset")]

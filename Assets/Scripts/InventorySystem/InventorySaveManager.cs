@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace ESDM.InventorySystem
+namespace InventorySystem
 {
     public class InventorySaveManager
     {

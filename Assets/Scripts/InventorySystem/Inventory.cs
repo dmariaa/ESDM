@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace ESDM.InventorySystem
+namespace InventorySystem
 {
     [CreateAssetMenu(menuName = "ESDM/Inventory", fileName = "Inventory.asset")]
     public class Inventory : ScriptableObject
@@ -13,15 +14,7 @@ namespace ESDM.InventorySystem
             {
                 if (!_instance)
                 {
-                    Inventory[] tmp = Resources.FindObjectsOfTypeAll<Inventory>();
-                    if (tmp.Length > 0)
-                    {
-                        _instance = tmp[0];
-                    }
-                    else
-                    {
-                        InventorySaveManager.LoadOrInitializeInventory();    
-                    }
+                    InventorySaveManager.LoadOrInitializeInventory();    
                 }
 
                 return _instance;
@@ -31,7 +24,8 @@ namespace ESDM.InventorySystem
         public static void InitializeFromDefault()
         {
             if(_instance) DestroyImmediate(_instance);
-            _instance = Instantiate((Inventory) Resources.Load("InventoryTemplate"));
+            Inventory inventory = Resources.Load<Inventory>("Inventory/InventoryTemplate");
+            _instance = Instantiate(inventory);
             _instance.hideFlags = HideFlags.HideAndDontSave;
         }
 
@@ -52,7 +46,7 @@ namespace ESDM.InventorySystem
 
         public bool SlotEmpty(int index)
         {
-            return inventory[index] == null || inventory[index].ItemGameObject == null;
+            return inventory[index] == null || inventory[index].ItemSprite == null;
         }
 
         public AbstractItem GetItem(int index)
@@ -72,6 +66,11 @@ namespace ESDM.InventorySystem
             if (slot != -1)
             {
                 inventory[slot] = abstractItem;
+
+                foreach (IInventorySystemMessageHandler listener in listeners)
+                {
+                    listener.ItemAdded(slot);
+                }
             }
 
             return slot;
@@ -85,6 +84,12 @@ namespace ESDM.InventorySystem
             }
 
             inventory[index] = null;
+            
+            foreach (IInventorySystemMessageHandler listener in listeners)
+            {
+                listener.ItemRemoved(index);
+            }
+
             return true;
         }
 
@@ -97,5 +102,24 @@ namespace ESDM.InventorySystem
 
             return -1;
         }
+        
+        // Messaging
+        private List<IInventorySystemMessageHandler> listeners = new List<IInventorySystemMessageHandler>();
+
+        public void RegisterListener(IInventorySystemMessageHandler listener)
+        {
+            listeners.Add(listener);
+        }
+
+        public void UnRegisterListener(IInventorySystemMessageHandler listener)
+        {
+            listeners.Remove(listener);
+        }
+    }
+
+    public interface IInventorySystemMessageHandler
+    {
+        void ItemAdded(int index);
+        void ItemRemoved(int index);
     }
 }

@@ -4,11 +4,13 @@ using ESDM.MenuSystem;
 using ESDM.ScriptableObjects;
 using ESDM.TutorialSystem;
 using Inventory.InventoryBar;
+using InventorySystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GlobalGameController : MonoBehaviour, IMenuEventHandler
 {
+    public GameObject PlayerCharacter;
     public GameObject InventoryPanel;
     public GameObject InventoryMaua;
     public GameObject PausePanel;
@@ -27,10 +29,17 @@ public class GlobalGameController : MonoBehaviour, IMenuEventHandler
         {
             if (!gameIsPaused && InventoryPanel != null)
             {
-                InventoryPanel.GetComponent<PanelSlider>().TogglePanel();
+                InventoryPanel.GetComponent<InventoryPanel>().TogglePanel();
             }
         }
 
+        if (InventoryPanel.GetComponent<InventoryPanel>().IsClosed())
+        {
+            PlayerCharacter.GetComponent<PlayerMovement>().paused = false;
+        } else
+        {
+            PlayerCharacter.GetComponent<PlayerMovement>().paused = true;
+        }
     }
 
     private void PauseGame(bool pause)

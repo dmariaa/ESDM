@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ChestKey
   m_EditorClassIdentifier: 
   Name: Llave del cofre
-  Description: Esta llave pertenece al candado de un cofre.
-  ItemGameObject: {fileID: 21300000, guid: f638445f4c6b24a9ab9525c34e754c2d, type: 3}
+  Description: Esta llave pertenece al candado de un cofre antiguo.
+  ItemSprite: {fileID: 21300000, guid: f638445f4c6b24a9ab9525c34e754c2d, type: 3}

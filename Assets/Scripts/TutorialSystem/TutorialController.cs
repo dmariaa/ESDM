@@ -7,6 +7,7 @@ namespace ESDM.TutorialSystem
     {
         public GameObject Character;
         public GameObject Object;
+        public GameObject InventoryPanel;
         public GameObject TutorialPanel;
         public TutorialStep step;
         private bool running = false;

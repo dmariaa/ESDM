@@ -1,5 +1,4 @@
-using System;
-using ESDM.Items;
+using InventorySystem;
 using UnityEngine;
 
 namespace ESDM.TutorialSystem
@@ -28,7 +27,7 @@ namespace ESDM.TutorialSystem
                 {
                     ShowPanel("SeeObject");
                     controller.Character.GetComponent<PlayerMovement>().paused = true;
-                    controller.Object.GetComponent<ItemTriggerHandler>().ActivateOutline(true, true, 3);
+                    controller.Object.GetComponent<ItemGameObject>().ActivateOutline(true, true, 3);
                     triggered = false;
                 }
 
@@ -36,7 +35,7 @@ namespace ESDM.TutorialSystem
                 {
                     HidePanel("SeeObject");
                     controller.Character.GetComponent<PlayerMovement>().paused = false;
-                    controller.Object.GetComponent<ItemTriggerHandler>().ActivateOutline(false);
+                    controller.Object.GetComponent<ItemGameObject>().ActivateOutline(false);
                     triggered = false;
                     return true;
                 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using ESDM.MenuSystem;
+﻿using System.Collections.Generic;
 using ESDM.Utilities;
 using Inventory;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace ESDM.Items
 {
@@ -14,7 +10,7 @@ namespace ESDM.Items
         private bool highlighted = false;
         public InventoryItemTypes itemType;
         private Material material;
-        private List<IItemPickupHandler> _registeredHandlers = new List<IItemPickupHandler>();
+        private List<IItemEventHandler> _registeredHandlers = new List<IItemEventHandler>();
 
         public void ActivateOutline(bool active, bool animated = false, int speed = 0)
         {
@@ -23,12 +19,12 @@ namespace ESDM.Items
             material.SetFloat("_OutlineSpeed", speed);
         }
 
-        public void RegisterHandler(IItemPickupHandler handler)
+        public void RegisterHandler(IItemEventHandler handler)
         {
             _registeredHandlers.Add(handler);
         }
         
-        public void UnRegisterHandler(IItemPickupHandler handler)
+        public void UnRegisterHandler(IItemEventHandler handler)
         {
             _registeredHandlers.Remove(handler);
         }
@@ -48,7 +44,7 @@ namespace ESDM.Items
                 highlighted = true;
                 ActivateOutline(true);
                 
-                List<IItemPickupHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IItemPickupHandler>();
+                List<IItemEventHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IItemEventHandler>();
                 ExecuteEventHelper.BroadcastEvent(handlers, 
                     (handler, eventData) => { handler.ItemEnter(this.gameObject, this.itemType); });
                 
@@ -65,7 +61,7 @@ namespace ESDM.Items
                 ActivateOutline(false);
                 highlighted = false;
                 
-                List<IItemPickupHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IItemPickupHandler>();
+                List<IItemEventHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IItemEventHandler>();
                 ExecuteEventHelper.BroadcastEvent(handlers, 
                     (handler, eventData) => { handler.ItemExit(this.gameObject, this.itemType); });
                 
@@ -78,7 +74,7 @@ namespace ESDM.Items
         {
             if (highlighted && Input.GetKeyDown(KeyCode.Space))
             {
-                List<IItemPickupHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IItemPickupHandler>();
+                List<IItemEventHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IItemEventHandler>();
                 ExecuteEventHelper.BroadcastEvent(handlers, 
                     (handler, eventData) => { handler.ItemPickup(this.gameObject, this.itemType); });
                 

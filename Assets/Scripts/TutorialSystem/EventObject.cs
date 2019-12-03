@@ -1,12 +1,12 @@
 using System;
-using ESDM.Items;
 using Inventory;
+using InventorySystem;
 using UnityEngine;
 
 namespace ESDM.TutorialSystem
 {
     [CreateAssetMenu(menuName = "ESDM/TutorialSystem/Actions/PickupObject")]
-    public class PickupObject : TutorialAction, IItemPickupHandler
+    public class EventObject : TutorialAction, IItemEventHandler
     {
         [NonSerialized] private bool itemPickedUp;
         
@@ -15,14 +15,14 @@ namespace ESDM.TutorialSystem
             base.InitAction(controller);
             
             itemPickedUp = false;
-            controller.Object.GetComponent<ItemTriggerHandler>().RegisterHandler(this);
+            controller.Object.GetComponent<ItemGameObject>().RegisterListener(this);
         }
 
         public override void ExitAction()
         {
             base.ExitAction();
             
-            controller.Object.GetComponent<ItemTriggerHandler>().UnRegisterHandler(this);
+            controller.Object.GetComponent<ItemGameObject>().RegisterListener(this);
         }
 
         public override bool PlayAction()
@@ -30,20 +30,20 @@ namespace ESDM.TutorialSystem
             return itemPickedUp;
         }
 
-        public void ItemPickup(GameObject item, InventoryItemTypes inventoryItemType)
+        public void ItemPickup(ItemGameObject item)
         {
             HidePanel("SelectObject");
             controller.Character.GetComponent<PlayerMovement>().paused = false;
             itemPickedUp = true;
         }
 
-        public void ItemEnter(GameObject item, InventoryItemTypes inventoryItemType)
+        public void ItemEnter(ItemGameObject item)
         {
             ShowPanel("PickupObject");
             controller.Character.GetComponent<PlayerMovement>().paused = true;
         }
 
-        public void ItemExit(GameObject item, InventoryItemTypes inventoryItemType)
+        public void ItemExit(ItemGameObject item)
         {
         }
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Inventory.InventoryBar
 {
@@ -20,7 +21,7 @@ namespace Inventory.InventoryBar
             if (_child)
             {
                 _childSize = _child.GetComponent<RectTransform>().sizeDelta;
-                _rectTransform = GetComponent<RectTransform>();
+                _rectTransform = _child.GetComponent<RectTransform>();
                 _rectTransform.sizeDelta = new Vector2(0, _childSize.y);
             }
         }
@@ -78,6 +79,11 @@ namespace Inventory.InventoryBar
                     }
                 }
             }
+        }
+
+        private void AnimatePanel(bool open)
+        {
+            
         }
     }
 
