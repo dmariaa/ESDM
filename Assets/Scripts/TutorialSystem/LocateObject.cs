@@ -26,15 +26,15 @@ namespace ESDM.TutorialSystem
                 if (!triggered)
                 {
                     ShowPanel("SeeObject");
-                    controller.Character.GetComponent<PlayerMovement>().paused = true;
+                    PauseCharacter(true);
                     controller.Object.GetComponent<ItemGameObject>().ActivateOutline(true, true, 3);
-                    triggered = false;
+                    triggered = true;
                 }
 
                 if (Input.anyKeyDown)
                 {
                     HidePanel("SeeObject");
-                    controller.Character.GetComponent<PlayerMovement>().paused = false;
+                    PauseCharacter(false);
                     controller.Object.GetComponent<ItemGameObject>().ActivateOutline(false);
                     triggered = false;
                     return true;

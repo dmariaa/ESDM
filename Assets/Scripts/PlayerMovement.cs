@@ -30,7 +30,8 @@ public class PlayerMovement : MonoBehaviour, IItemEventHandler
         else
         {
             inputX = 0.0f;
-            inputY = 0.0f; }
+            inputY = 0.0f; 
+        }
     }
 
     private void FixedUpdate()

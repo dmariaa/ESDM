@@ -5,6 +5,7 @@ namespace ESDM.TutorialSystem
 {
     public class TutorialController : MonoBehaviour
     {
+        public GameObject HelpPanel;
         public GameObject Character;
         public GameObject Object;
         public GameObject InventoryPanel;

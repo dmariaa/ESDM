@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DirectionVector: {x: 1, y: 0, z: 0}
+  key: 52
   Speed: 80
   Distance: 40
 --- !u!1 &6985258579288116032
@@ -680,6 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DirectionVector: {x: -1, y: 0, z: 0}
+  key: 49
   Speed: 80
   Distance: 40
 --- !u!1 &6985258579441453702
@@ -826,6 +828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DirectionVector: {x: 1, y: 1, z: 0}
+  key: 51
   Speed: 80
   Distance: 40
 --- !u!1 &6985258580555207632
@@ -915,6 +918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DirectionVector: {x: 1, y: -1, z: 0}
+  key: 53
   Speed: 80
   Distance: 40
 --- !u!1 &6985258580639907267
@@ -1004,6 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DirectionVector: {x: -1, y: -1, z: 0}
+  key: 54
   Speed: 80
   Distance: 40
 --- !u!1 &6985258580747947702
@@ -1093,5 +1098,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DirectionVector: {x: -1, y: 1, z: 0}
+  key: 50
   Speed: 80
   Distance: 40

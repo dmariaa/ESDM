@@ -1,5 +1,4 @@
-using System;
-using TMPro;
+using InventorySystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +8,7 @@ namespace Maua
     public class MauaPetal : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
         public Vector3 DirectionVector;
+        public KeyCode key;
         public float Speed;
         public float Distance;
 
@@ -16,7 +16,20 @@ namespace Maua
         private Vector3 _initialPosition;
         private Vector3 _endPosition;
         private bool _moving = false;
-        
+
+        private int _itemIndex;
+
+        public int ItemIndex
+        {
+            get => _itemIndex;
+            set
+            {
+                _itemIndex = value;
+                AbstractItem item = InventorySystem.Inventory.Instance.GetItem(_itemIndex);
+                SetPetalImage(item?.ItemSprite);
+            }
+        }
+
         private void Start()
         {
             _initialPosition = transform.localPosition;
@@ -44,6 +57,12 @@ namespace Maua
                         _moving = false;
                     }
                 }
+            }
+
+            if (Input.GetKeyDown(key))
+            {
+                ExecuteEvents.Execute<IPetalPointerEventHandler>(transform.parent.gameObject, null,
+                    (handler, data) => { handler.PetalSelect(this.name); } );
             }
         }
 

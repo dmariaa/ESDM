@@ -1,14 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ESDM.MenuSystem;
-using ESDM.ScriptableObjects;
-using ESDM.TutorialSystem;
-using Inventory.InventoryBar;
+﻿using ESDM.MenuSystem;
 using InventorySystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GlobalGameController : MonoBehaviour, IMenuEventHandler
+public class GlobalGameController : MonoBehaviour, IMenuEventHandler, IInventoryPanelEventHandler
 {
     public GameObject PlayerCharacter;
     public GameObject InventoryPanel;
@@ -31,14 +26,6 @@ public class GlobalGameController : MonoBehaviour, IMenuEventHandler
             {
                 InventoryPanel.GetComponent<InventoryPanel>().TogglePanel();
             }
-        }
-
-        if (InventoryPanel.GetComponent<InventoryPanel>().IsClosed())
-        {
-            PlayerCharacter.GetComponent<PlayerMovement>().paused = false;
-        } else
-        {
-            PlayerCharacter.GetComponent<PlayerMovement>().paused = true;
         }
     }
 
@@ -82,5 +69,15 @@ public class GlobalGameController : MonoBehaviour, IMenuEventHandler
     {
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("Scenes/MainMenu");
+    }
+
+    public void InventoryPanelOpened()
+    {
+        PlayerCharacter.GetComponent<PlayerMovement>().paused = true;
+    }
+
+    public void InventoryPanelClosed()
+    {
+        PlayerCharacter.GetComponent<PlayerMovement>().paused = false;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ESDM.TutorialSystem
 {
     [CreateAssetMenu(menuName = "ESDM/TutorialSystem/Actions/PickupObject")]
-    public class EventObject : TutorialAction, IItemEventHandler
+    public class PickupObject : TutorialAction, IItemEventHandler
     {
         [NonSerialized] private bool itemPickedUp;
         
@@ -21,8 +21,7 @@ namespace ESDM.TutorialSystem
         public override void ExitAction()
         {
             base.ExitAction();
-            
-            controller.Object.GetComponent<ItemGameObject>().RegisterListener(this);
+            controller.Object.GetComponent<ItemGameObject>().UnRegisterListener(this);
         }
 
         public override bool PlayAction()
@@ -32,15 +31,16 @@ namespace ESDM.TutorialSystem
 
         public void ItemPickup(ItemGameObject item)
         {
-            HidePanel("SelectObject");
-            controller.Character.GetComponent<PlayerMovement>().paused = false;
+            HidePanel("PickupObject");
+            PauseCharacter(false);
             itemPickedUp = true;
         }
 
         public void ItemEnter(ItemGameObject item)
         {
             ShowPanel("PickupObject");
-            controller.Character.GetComponent<PlayerMovement>().paused = true;
+            PauseCharacter(true);
+            itemPickedUp = false;
         }
 
         public void ItemExit(ItemGameObject item)

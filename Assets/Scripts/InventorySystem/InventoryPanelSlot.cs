@@ -8,6 +8,8 @@ namespace InventorySystem
     [RequireComponent(typeof(RectTransform), typeof(CanvasRenderer), typeof(Image))]
     public class InventoryPanelSlot : MonoBehaviour, IPointerClickHandler
     {
+        public Vector2Int gridPosition;
+            
         private AbstractItem _item;
         private Image _border;
         private Image _innerBorder;

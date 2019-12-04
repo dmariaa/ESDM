@@ -59,6 +59,16 @@ namespace InventorySystem
             return inventory[index];
         }
 
+        public int GetIndex(AbstractItem item)
+        {
+            for (int i = 0, length = inventory.Length; i < length; i++)
+            {
+                if (inventory[i] == item) return i;
+            }
+
+            return -1;
+        }
+
         public int InsertItem(AbstractItem abstractItem)
         {
             int slot = FindEmptySlot();

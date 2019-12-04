@@ -42,7 +42,6 @@ namespace ESDM.TutorialSystem
 
         protected void PanelSetActive(string name, bool visible)
         {
-            // Debug.LogFormat("{0} panel {1}", visible ? "Activating" : "Deactivating" ,name);
             GetPanel(name)?.SetActive(visible);
         }
 

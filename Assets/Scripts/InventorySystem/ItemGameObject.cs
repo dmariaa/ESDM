@@ -27,8 +27,9 @@ namespace InventorySystem
         private void Start()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _spriteRenderer.material = new Material(Resources.Load<Material>("Shaders/ItemMaterial"));
-            _spriteRenderer.material.SetFloat("_OutlineSize", 3.0f);
+            
+            _spriteRenderer.sharedMaterial = new Material(Resources.Load<Material>("Shaders/ItemMaterial"));
+            _spriteRenderer.sharedMaterial.SetFloat("_OutlineSize", 3.0f);
             
         }
 
