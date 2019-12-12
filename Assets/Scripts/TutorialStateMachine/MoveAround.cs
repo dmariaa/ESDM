@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ESDM.ScriptableObjects;
-using Inventory.InventoryBar;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ESDM.TutorialStateMachine
 {

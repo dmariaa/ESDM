@@ -13,6 +13,7 @@ namespace ESDM.TutorialSystem
             base.InitAction(controller);
             ShowPanel("OpenInventory");
             PauseCharacter(true);
+            _triggered = false;
         }
 
         public override bool PlayAction()

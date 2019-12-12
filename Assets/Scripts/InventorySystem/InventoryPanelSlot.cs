@@ -1,4 +1,3 @@
-using ESDM.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,6 +19,7 @@ namespace InventorySystem
             get { return _item; }
             set
             {
+                Debug.Log("SLOT Item set");
                 _item = value;
                 
                 _itemImage.sprite = _item.ItemSprite;
@@ -29,8 +29,9 @@ namespace InventorySystem
             }
         }
         
-        private void Start()
+        private void Awake()
         {
+            Debug.Log("SLOT Awake Called");
             _border = GetComponent<Image>();
             _innerBorder = transform.GetChild(0).GetComponent<Image>();
             _itemImage = transform.GetChild(0).GetChild(0).GetComponent<Image>();

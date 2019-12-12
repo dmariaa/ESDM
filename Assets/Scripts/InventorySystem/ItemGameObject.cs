@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ESDM.ScriptableObjects;
 using ESDM.Utilities;
 using UnityEngine;
 
@@ -31,6 +32,22 @@ namespace InventorySystem
             _spriteRenderer.sharedMaterial = new Material(Resources.Load<Material>("Shaders/ItemMaterial"));
             _spriteRenderer.sharedMaterial.SetFloat("_OutlineSize", 3.0f);
             
+            // TODO: ENHANCE
+            if (Application.isPlaying)
+            {
+                if (GlobalGameState.Instance.CurrentGameState.keyPicked)
+                {
+                    this.gameObject.SetActive(false);
+                }
+                else
+                {
+                    this.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                this.gameObject.SetActive(true);
+            }
         }
 
         private void Update()
@@ -49,7 +66,6 @@ namespace InventorySystem
                 
                 ExecuteEventHelper.BroadcastEvent(_registeredHandlers, 
                     (handler, eventData) => { handler.ItemPickup(this); }, true);
-
             }
         }
         

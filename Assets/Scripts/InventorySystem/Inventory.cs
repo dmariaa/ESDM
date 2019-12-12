@@ -1,48 +1,16 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace InventorySystem
 {
-    [CreateAssetMenu(menuName = "ESDM/Inventory", fileName = "Inventory.asset")]
-    public class Inventory : ScriptableObject
+    [System.Serializable]
+    public class Inventory
     {
-        private static Inventory _instance;
+        public AbstractItem[] inventory = new AbstractItem[16];
 
-        public static Inventory Instance
+        public int getLength()
         {
-            get
-            {
-                if (!_instance)
-                {
-                    InventorySaveManager.LoadOrInitializeInventory();    
-                }
-
-                return _instance;
-            }
+            return inventory.Length;
         }
-        
-        public static void InitializeFromDefault()
-        {
-            if(_instance) DestroyImmediate(_instance);
-            Inventory inventory = Resources.Load<Inventory>("Inventory/InventoryTemplate");
-            _instance = Instantiate(inventory);
-            _instance.hideFlags = HideFlags.HideAndDontSave;
-        }
-
-        public static void LoadFromJSON(string path)
-        {
-            if(_instance) DestroyImmediate(_instance);
-            _instance = ScriptableObject.CreateInstance<Inventory>();
-            JsonUtility.FromJsonOverwrite(System.IO.File.ReadAllText(path), _instance);
-            _instance.hideFlags = HideFlags.HideAndDontSave;
-        }
-
-        public void SaveToJSON(string path)
-        {
-            System.IO.File.WriteAllText(path, JsonUtility.ToJson(this, true));
-        }
-
-        public AbstractItem[] inventory;
 
         public bool SlotEmpty(int index)
         {
@@ -77,7 +45,7 @@ namespace InventorySystem
             {
                 inventory[slot] = abstractItem;
 
-                foreach (IInventorySystemMessageHandler listener in listeners)
+                foreach (IInventorySystemMessageHandler listener in _listeners)
                 {
                     listener.ItemAdded(slot);
                 }
@@ -95,7 +63,7 @@ namespace InventorySystem
 
             inventory[index] = null;
             
-            foreach (IInventorySystemMessageHandler listener in listeners)
+            foreach (IInventorySystemMessageHandler listener in _listeners)
             {
                 listener.ItemRemoved(index);
             }
@@ -114,16 +82,17 @@ namespace InventorySystem
         }
         
         // Messaging
-        private List<IInventorySystemMessageHandler> listeners = new List<IInventorySystemMessageHandler>();
+        private List<IInventorySystemMessageHandler> _listeners = new List<IInventorySystemMessageHandler>();
+        
 
         public void RegisterListener(IInventorySystemMessageHandler listener)
         {
-            listeners.Add(listener);
+            _listeners.Add(listener);
         }
 
         public void UnRegisterListener(IInventorySystemMessageHandler listener)
         {
-            listeners.Remove(listener);
+            _listeners.Remove(listener);
         }
     }
 

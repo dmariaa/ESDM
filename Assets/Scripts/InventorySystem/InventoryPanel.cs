@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+using ESDM.ScriptableObjects;
 using ESDM.Utilities;
 using Maua;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Experimental.UIElements;
 
 namespace InventorySystem
 {
@@ -22,13 +21,18 @@ namespace InventorySystem
         private float _closedSize = 10.0f;
         private float _openedSize = 1000.0f;
         private float _time = 0.0f;
-        
+
+        private void OnDestroy()
+        {
+            GlobalGameState.Instance.CurrentGameState.inventory.UnRegisterListener(this);
+        }
+
         private void Start()
         {
-            Inventory.Instance.RegisterListener(this);
+            GlobalGameState.Instance.CurrentGameState.inventory.RegisterListener(this);
 
             GameObject prefab = Resources.Load<GameObject>("Prefabs/InventorySlot");
-            int numberOfSlots = Inventory.Instance.inventory.Length;
+            int numberOfSlots = GlobalGameState.Instance.CurrentGameState.inventory.getLength();
 
             for (int i = 0; i < numberOfSlots; i++)
             {
@@ -37,8 +41,17 @@ namespace InventorySystem
                 
                 GameObject slot = Instantiate(prefab, transform);
                 slot.name = String.Format("InventorySlot[{0}][{1}]", row, col);
-                slot.GetComponent<InventoryPanelSlot>().gridPosition = new Vector2Int(row, col);
-                slots.Add(slot.GetComponent<InventoryPanelSlot>());
+                slot.SetActive(true);
+                
+                InventoryPanelSlot inventoryPanelSlot = slot.GetComponent<InventoryPanelSlot>(); 
+                inventoryPanelSlot.gridPosition = new Vector2Int(row, col);
+                slots.Add(inventoryPanelSlot);
+                
+                AbstractItem item = GlobalGameState.Instance.CurrentGameState.inventory.GetItem(i);
+                if (item)
+                {
+                    slot.GetComponent<InventoryPanelSlot>().Item = item;    
+                }
             }
 
             _rectTransform = GetComponent<RectTransform>();
@@ -52,7 +65,7 @@ namespace InventorySystem
 
         public void ItemAdded(int index)
         {
-            slots[index].Item = Inventory.Instance.GetItem(index);
+            slots[index].Item = GlobalGameState.Instance.CurrentGameState.inventory.GetItem(index);
         }
 
         public void ItemRemoved(int index)
@@ -173,7 +186,17 @@ namespace InventorySystem
         {
             if (IsOpened() && _selectedSlot != null)
             {
-                petal.ItemIndex = 0;
+                AbstractItem item = _selectedSlot.Item;
+                if (item != null)
+                {
+                    int index = GlobalGameState.Instance.CurrentGameState.inventory.GetIndex(item);
+                    petal.ItemIndex = index + 1;
+                    GlobalGameState.Instance.CurrentGameState.mauaPetals[petal.GetIndex()] = index + 1;
+                }
+                else
+                {
+                    petal.ItemIndex = 0;
+                }
             }
         }
     }

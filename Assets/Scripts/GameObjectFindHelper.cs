@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using ESDM.Items;
-using Iventory.InventoryBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;

@@ -22,7 +22,5 @@ namespace ESDM.TutorialSystem
 
             return false;
         }
-        
-        
     }
 }

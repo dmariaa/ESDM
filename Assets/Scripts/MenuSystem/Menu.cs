@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using ESDM.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,6 +24,17 @@ namespace ESDM.MenuSystem
         private string currentSelectedChild;
 
         private Dictionary<string, MenuOption> menuOptions;
+
+        public MenuOption this[string name]
+        {
+            get { return menuOptions[name];  }
+        }
+
+        public void RemoveMenuOption(string name)
+        {
+            this[name].isSpacer = true;
+            Restart();
+        }
 
         // Start is called before the first frame update
         void Start()

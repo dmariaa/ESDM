@@ -16,7 +16,7 @@ namespace ESDM.TutorialSystem
         {
             if (!Initialized)
             {
-                // Debug.LogFormat("Initializing state {0}", action.name);
+                Debug.LogFormat("Tutorial Initializing state {0}", action.name);
                 action.InitAction(controller);
                 Initialized = true;
             }
@@ -25,7 +25,11 @@ namespace ESDM.TutorialSystem
             {
                 if (nextStep != null)
                 {
-                    // Debug.LogFormat("Switching to state {0}", nextStep.name);    
+                    Debug.LogFormat("Tutorial Switching to state {0}", nextStep.name);    
+                }
+                else
+                {
+                    Debug.LogFormat("Ending tutorial");
                 }
                 
                 action.ExitAction();

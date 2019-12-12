@@ -1,4 +1,4 @@
-using System;
+using ESDM.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +10,12 @@ namespace ESDM.MenuSystem
         {
             switch (option)
             {
+                case "continue":
+                    RunGame();
+                    break;
+                case "new-game":
+                    GlobalGameState.Instance.ResetCurrentGame();
+                    break;
                 case "exit":
                     QuitApplication();
                     break;
@@ -31,6 +37,20 @@ namespace ESDM.MenuSystem
 #else
             Application.Quit();
 #endif
+        }
+
+        private Menu GetMenu(string name)
+        {
+            GameObject[] rootGameObjects = gameObject.scene.GetRootGameObjects();
+            for (int i = 0, length = rootGameObjects.Length; i < length; i++)
+            {
+                if (rootGameObjects[i].name == name)
+                {
+                    return rootGameObjects[i].GetComponentInChildren<Menu>();
+                }
+            }
+
+            return null;
         }
     }
 }

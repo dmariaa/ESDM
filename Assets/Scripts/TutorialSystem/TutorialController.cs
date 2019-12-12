@@ -1,5 +1,6 @@
-using System;
+using TutorialSystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ESDM.TutorialSystem
 {
@@ -11,11 +12,14 @@ namespace ESDM.TutorialSystem
         public GameObject InventoryPanel;
         public GameObject TutorialPanel;
         public TutorialStep step;
+        
         private bool running = false;
+        
+        public bool alreadyRun = false;
 
         private void Update()
         {
-            if (running)
+            if (running && !alreadyRun)
             {
                 step.UpdateStep(this);    
             }
@@ -38,6 +42,9 @@ namespace ESDM.TutorialSystem
             else
             {
                 running = false;
+                GlobalGameController gameController = transform.GetComponent<GlobalGameController>();
+                ExecuteEvents.Execute<ITutorialEventHandler>(gameObject, null,
+                    (handler, eventData) => { handler.TutorialEnded(); });
             }
         }
     }

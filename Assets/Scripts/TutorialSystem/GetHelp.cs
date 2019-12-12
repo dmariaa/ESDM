@@ -1,4 +1,3 @@
-using InventorySystem;
 using UnityEngine;
 
 namespace ESDM.TutorialSystem

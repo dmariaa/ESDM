@@ -1,5 +1,3 @@
-using Inventory;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace InventorySystem
