@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565a14f3e02347a5985d1b28ca9c8d8b, type: 3}
+  m_Name: GlobalGameState
+  m_EditorClassIdentifier: 
+  savedGames: []
+  currentGameState:
+    savedDate: 
+    savedName: 
+    gameStarted: 0
+    tutorialPlayed: 0
+    keyPicked: 0
+    chestOpened: 0
+    paperPicked: 0
+    lastPosition: {x: 0, y: 0, z: 0}
+    inventory:
+      inventory:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}

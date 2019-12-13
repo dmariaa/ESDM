@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using ESDM.ScriptableObjects;
+using ESDM.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,7 +23,7 @@ namespace Maua
             }
             if (eventHandler == null)
             {
-                Debug.LogError("No event handler for maua events found.");
+                Debug.Log("No event handler for maua events found.");
             }
             
             for (int i = 0; i < transform.childCount; i++)
@@ -32,6 +34,13 @@ namespace Maua
                 if (childImage != null && childImage.sprite != null)
                 {
                     child.GetComponent<Image>().alphaHitTestMinimumThreshold = 1;
+                }
+
+                MauaPetal petal = child.GetComponent<MauaPetal>();
+                if (petal != null)
+                {
+                    int index = petal.GetIndex();
+                    petal.ItemIndex = GlobalGameState.Instance.CurrentGameState.mauaPetals[index];
                 }
             }
         }
@@ -63,6 +72,7 @@ namespace Maua
         public void PetalSelect(string name)
         {
             GameObject petal;
+            List<IMauaEventHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IMauaEventHandler>();
 
             if (name != selectedPetal)
             {
@@ -75,14 +85,21 @@ namespace Maua
                     
                     petal = transform.Find(current).gameObject;
                     
-                    ExecuteEvents.Execute<IMauaEventHandler>(eventHandler, null,
-                        (handler, data) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), false); });
+                    //ExecuteEvents.Execute<IMauaEventHandler>(eventHandler, null,
+                    //    (handler, data) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), false); });
+                    
+                    ExecuteEventHelper.BroadcastEvent(handlers, (handler, eventData) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), false); });
+
                 }
             }
             
             petal = transform.Find(name).gameObject;
-            ExecuteEvents.Execute<IMauaEventHandler>(eventHandler, null,
-                (handler, data) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), true); });
+
+            // ExecuteEvents.Execute<IMauaEventHandler>(eventHandler, null,
+            //    (handler, data) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), true); });
+            
+            ExecuteEventHelper.BroadcastEvent(handlers, (handler, eventData) => { handler.PetalToggle(petal.GetComponent<MauaPetal>(), true);  });
+
 
         }
     }

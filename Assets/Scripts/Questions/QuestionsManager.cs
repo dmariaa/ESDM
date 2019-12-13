@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ESDM.MenuSystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +10,6 @@ namespace Questions
         public List<Question> questions = new List<Question>();
         private int currentQuestion = 0;
         public GameObject endLevelPanel;
-
-        private void Start()
-        {
-        }
 
         private void OnEnable()
         {

@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
+using ESDM.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,6 +24,17 @@ namespace ESDM.MenuSystem
         private string currentSelectedChild;
 
         private Dictionary<string, MenuOption> menuOptions;
+
+        public MenuOption this[string name]
+        {
+            get { return menuOptions[name];  }
+        }
+
+        public void RemoveMenuOption(string name)
+        {
+            this[name].isSpacer = true;
+            Restart();
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -187,9 +197,14 @@ namespace ESDM.MenuSystem
                 menuOption.destination.transform.gameObject.SetActive(true);
                 transform.parent.gameObject.SetActive(false);
             }
-            
-            ExecuteEvents.Execute<IMenuEventHandler>(transform.gameObject, null,
-                (handler, eventData) => { handler.MenuSelected(menuOption.name); } );
+
+            List<IMenuEventHandler> implementors = GameObjectFindHelper.FindGameObjectWithInterface<IMenuEventHandler>();
+            for (int i = 0, length = implementors.Count; i < length; i++)
+            {
+                MonoBehaviour implementor = (MonoBehaviour) implementors[i];
+                ExecuteEvents.Execute<IMenuEventHandler>(implementor.gameObject, null,
+                    (handler, eventData) => { handler.MenuSelected(menuOption.name); } );
+            }
         }
         
         // Update is called once per frame
