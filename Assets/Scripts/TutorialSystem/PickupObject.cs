@@ -20,7 +20,10 @@ namespace ESDM.TutorialSystem
         public override void ExitAction()
         {
             base.ExitAction();
-            controller.Object.GetComponent<ItemGameObject>().UnRegisterListener(this);
+            if (controller && controller.Object && controller.Object.activeInHierarchy)
+            {
+                controller.Object.GetComponent<ItemGameObject>().UnRegisterListener(this);    
+            }
         }
 
         public override bool PlayAction()

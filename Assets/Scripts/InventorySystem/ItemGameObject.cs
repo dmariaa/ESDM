@@ -31,6 +31,7 @@ namespace InventorySystem
             
             _spriteRenderer.sharedMaterial = new Material(Resources.Load<Material>("Shaders/ItemMaterial"));
             _spriteRenderer.sharedMaterial.SetFloat("_OutlineSize", 3.0f);
+            _spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             
             // TODO: ENHANCE
             if (Application.isPlaying)

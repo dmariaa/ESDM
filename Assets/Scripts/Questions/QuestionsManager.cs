@@ -11,10 +11,6 @@ namespace Questions
         private int currentQuestion = 0;
         public GameObject endLevelPanel;
 
-        private void Start()
-        {
-        }
-
         private void OnEnable()
         {
             Debug.Log("Starting test");

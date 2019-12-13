@@ -9,10 +9,14 @@ namespace ObjectHandlers
 {
     public class Door : MonoBehaviour, IMauaEventHandler
     {
+        private bool playerHit = false;
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.name == "Stella")
             {
+                playerHit = true;
+                
                 TextManager textManager = other.GetComponent<TextManager>();
                 textManager.DisplayMessage("Necesito algo para abrir esta puerta", Color.white, 0);
                 textManager.DisplayMessage("", Color.white, 3.0f);
@@ -26,13 +30,18 @@ namespace ObjectHandlers
         {
             if (other.gameObject.name == "Stella")
             {
+                playerHit = false;
             }
         }
 
         public void PetalToggle(MauaPetal petal, bool open)
         {
-            List<IDoorEventHandler> handlers = GameObjectFindHelper.FindGameObjectWithInterface<IDoorEventHandler>();
-            ExecuteEventHelper.BroadcastEvent(handlers, (handler, eventData) => { handler.DoorOpened(); });
+            if(playerHit)
+            {
+                List<IDoorEventHandler> handlers =
+                    GameObjectFindHelper.FindGameObjectWithInterface<IDoorEventHandler>();
+                ExecuteEventHelper.BroadcastEvent(handlers, (handler, eventData) => { handler.DoorOpened(); });
+            }
         }
     }
 

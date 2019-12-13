@@ -14,7 +14,6 @@ public class GlobalGameController : MonoBehaviour, IMenuEventHandler, IInventory
     public GameObject PlayerSpawnPoint;
     public GameObject PlayerCharacter;
     public GameObject InventoryPanel;
-    public GameObject InventoryMaua;
     public GameObject PausePanel;
     public GameObject TutorialRoomPanel;
     public GameObject QuestionsPanel;
@@ -149,5 +148,11 @@ public class GlobalGameController : MonoBehaviour, IMenuEventHandler, IInventory
     {
         PlayerCharacter.GetComponent<PlayerMovement>().paused = true;
         QuestionsPanel?.SetActive(true);
+    }
+
+    public void ResetLevel()
+    {   
+        GlobalGameState.Instance.Save();
+        EndGame();
     }
 }
